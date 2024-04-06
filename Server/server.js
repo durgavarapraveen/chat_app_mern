@@ -13,8 +13,8 @@ connectDB();
 
 const app = express();
 const corsOrigin = {
-  // origin: "https://chat-app-mern-frontend.onrender.com",
-  origin: "*",
+  origin: "https://chat-app-mern-frontend.onrender.com",
+  // origin: "*",
 };
 app.use(cors(corsOrigin));
 app.use(express.json());
@@ -37,8 +37,8 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    // origin: "https://chat-app-mern-frontend.onrender.com",
-    origin: "*",
+    origin: "https://chat-app-mern-frontend.onrender.com",
+    // origin: "*",
   },
 });
 
