@@ -23,6 +23,12 @@ function HomePage() {
   const { user } = useChatState();
   console.log("user", user);
 
+  useEffect(() => {
+    if (user) {
+      navigate("/chat");
+    }
+  }, [user, navigate]);
+
   async function RequestPermission() {
     const premission = await Notification.requestPermission();
 
