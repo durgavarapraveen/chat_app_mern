@@ -26,22 +26,6 @@ app.use("/api/user", UserRoutes);
 app.use("/api/chat", ChatRoutes);
 app.use("/api/message", MessageRoutes);
 
-// -------------Deployment----------------
-
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "/Client/dist")));
-
-//   app.get("*", (req, res) =>
-//     res.sendFile(path.join(process.cwd(), "/Client/dist/index.html"))
-//   );
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("API is running..");
-//   });
-// }
-
-// -----------------Deployment----------------
-
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(
@@ -52,7 +36,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://chat-app-mern-frontend.onrender.com",
   },
 });
 
