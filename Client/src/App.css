@@ -1,0 +1,35 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.Login-Container {
+    min-height: 100vh;
+    display: flex;
+    width: 100%;
+    background-image: url('https://github.com/piyush-eon/mern-chat-app/blob/master/frontend/src/background.png?raw=true');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.Container {
+    background-image: url('https://github.com/piyush-eon/mern-chat-app/blob/master/frontend/src/background.png?raw=true');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    max-height: 100vh;
+    color: black
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(136, 136, 136, 0.281);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
