@@ -41,7 +41,7 @@ function Login() {
         toast.success(data.message);
         console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
-        window.location.href = "/chat";
+        navigate("/chat");
       } else {
         toast.error(data.message);
       }

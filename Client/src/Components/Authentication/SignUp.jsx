@@ -91,7 +91,7 @@ function SignUp() {
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("user", JSON.stringify(data));
-        window.location.href = "/chat";
+        navigate("/chat");
       } else {
         toast.error(data.message);
       }
