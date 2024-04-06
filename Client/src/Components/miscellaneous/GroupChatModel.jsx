@@ -14,14 +14,14 @@ import {
   Box,
 } from "@chakra-ui/react";
 import toast from "react-hot-toast";
-import { ChatState } from "../../Context/ChatProvider";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 import UserBadgeItem from "./UserBadgeItem";
+import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function GroupChatModel({ children }) {
-  const { user, chats, setChats } = ChatState();
+  const { user, chats, setChats } = useChatState();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [grpChatName, setGrpChatName] = useState("");

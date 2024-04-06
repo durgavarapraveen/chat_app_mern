@@ -5,11 +5,11 @@ import {
   isSameSender,
   isSameSenderMargin,
 } from "../../Config/ChatLogics";
-import { ChatState } from "../../Context/ChatProvider";
 import { Tooltip, Avatar } from "@chakra-ui/react";
+import { useChatState } from "../../Context/ChatProvider";
 
 function ScrollableChats({ messages }) {
-  const { user } = ChatState();
+  const { user } = useChatState();
 
   console.log(messages);
 

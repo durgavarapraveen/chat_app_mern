@@ -12,18 +12,19 @@ import {
 import Login from "../Components/Authentication/Login";
 import SignUp from "../Components/Authentication/SignUp";
 import { useNavigate } from "react-router-dom";
-import { ChatState } from "../Context/ChatProvider";
+import { useChatState } from "../Context/ChatProvider";
 
 function HomePage() {
+  document.title = "Login | Connect";
+
   const navigate = useNavigate();
-
-  const { user } = ChatState();
-
+  const { user } = useChatState();
+  console.log("user", user);
   // useEffect(() => {
   //   if (user) {
-  //     navigate("/chat");
+  //     window.location.href = "/chat";
   //   }
-  // }, [user, navigate]);
+  // }, [user]);
 
   return (
     <div className="Login-Container">
@@ -40,7 +41,7 @@ function HomePage() {
           borderWidth="1px"
         >
           <Text fontSize="4xl" fontFamily="Work sans" align="center">
-            Talk-A-Tive
+            Connect
           </Text>
         </Box>
 

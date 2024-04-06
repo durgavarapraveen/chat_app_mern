@@ -21,7 +21,6 @@ import { Spinner } from "@chakra-ui/spinner";
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { ChatState } from "../../Context/ChatProvider";
 import ProfileModel from "./ProfileModel";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
@@ -31,6 +30,7 @@ import Chatloading from "./Chatloading";
 import UserListItem from "./UserListItem";
 import { getSender } from "../../Config/ChatLogics";
 import { Badge } from "primereact/badge";
+import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function SideDrawer() {
@@ -42,7 +42,7 @@ function SideDrawer() {
     setChats,
     notification,
     setNotification,
-  } = ChatState();
+  } = useChatState();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -117,7 +117,7 @@ function SideDrawer() {
         w="100%"
         bg={"white"}
         p="5px 10px"
-        borderWidth={2}
+        borderWidth={0}
       >
         <Tooltip label="Search Users to Chat" hasArrow placement="bottom-end">
           <Button variant={"ghost"} ref={btnRef} onClick={onOpen}>
@@ -128,13 +128,17 @@ function SideDrawer() {
           </Button>
         </Tooltip>
 
-        <Text fontSize={"2xl"} fontFamily={"Work Sans"}>
-          Talk-A-Tive
+        <Text
+          fontSize={"2xl"}
+          fontFamily={"Work Sans"}
+          display={{ base: "none", md: "block" }}
+        >
+          Connect
         </Text>
 
-        <div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <Menu>
-            <MenuButton p={1}>
+            <MenuButton p={1} display={{ base: "none", md: "block" }}>
               <BellIcon fontSize={"2xl"} m={1}>
                 <Badge value="2" severity="danger"></Badge>
               </BellIcon>

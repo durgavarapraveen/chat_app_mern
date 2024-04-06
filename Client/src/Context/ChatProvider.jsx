@@ -4,14 +4,21 @@ const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null); // Initialize user state to null
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("user"));
-    setUser(userInfo);
-  }, []);
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      setUser(userInfo);
+    } catch (error) {
+      console.error(
+        "Error retrieving user information from localStorage:",
+        error
+      );
+    }
+  }, []); // Run effect only once on component mount
 
   return (
     <ChatContext.Provider
@@ -19,7 +26,7 @@ const ChatProvider = ({ children }) => {
         selectedChat,
         setSelectedChat,
         user,
-        setUser,
+        setUser, // Consider adding a setUser function to update localStorage when user changes
         notification,
         setNotification,
         chats,
@@ -31,8 +38,6 @@ const ChatProvider = ({ children }) => {
   );
 };
 
-export const ChatState = () => {
-  return useContext(ChatContext);
-};
+export const useChatState = () => useContext(ChatContext); // Renamed to useChatState for clarity
 
 export default ChatProvider;

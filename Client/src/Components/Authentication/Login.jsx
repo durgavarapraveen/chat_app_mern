@@ -36,15 +36,12 @@ function Login() {
     }
 
     try {
-      const { data } = await axios.post(
-        `${backendURL}/api/user/login`,
-        user
-      );
+      const { data } = await axios.post(`${backendURL}/api/user/login`, user);
       if (data.success) {
         toast.success(data.message);
         console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
-        navigate("/chat");
+        window.location.href = "/chat";
       } else {
         toast.error(data.message);
       }

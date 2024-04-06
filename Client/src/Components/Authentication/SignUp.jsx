@@ -58,7 +58,6 @@ function SignUp() {
 
       const imageData = await response.json();
       setUser({ ...user, picture: imageData.url });
-      console.log(imageData.url);
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error("Failed to upload image");
@@ -89,11 +88,10 @@ function SignUp() {
         `${backendURL}/api/user/register`,
         user
       );
-      console.log(data);
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("user", JSON.stringify(data));
-        navigate("/chat");
+        window.location.href = "/chat";
       } else {
         toast.error(data.message);
       }

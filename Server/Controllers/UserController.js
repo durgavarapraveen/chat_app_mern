@@ -9,17 +9,17 @@ const registerUserController = asyncHandler(async (req, res) => {
   const { name, email, password, picture } = req.body;
 
   if (name == "") {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Name is required",
     });
   } else if (email == "") {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Email is required",
     });
   } else if (password == "") {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Password is required",
     });
@@ -57,12 +57,12 @@ const loginUserController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (email == "") {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Email is required",
     });
   } else if (password == "") {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Password is required",
     });
@@ -80,7 +80,7 @@ const loginUserController = asyncHandler(async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    return res.status(400).send({
+    return res.status(201).send({
       success: false,
       message: "Password is incorrect",
     });

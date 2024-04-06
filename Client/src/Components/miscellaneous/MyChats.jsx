@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
 import axios from "axios";
 import { Box, Button, Stack, Text, Avatar } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import Chatloading from "./Chatloading";
-import {
-  getSender,
-  getSenderProfilePic,
-  isLastMessage,
-} from "../../Config/ChatLogics";
+import { getSender, getSenderProfilePic } from "../../Config/ChatLogics";
 import GroupChatModel from "./GroupChatModel";
 import LastMessageofChat from "../../Config/LastMessageofChat";
+import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function MyChats({ fetchAgain }) {
-  const { selectedChat, setSelectedChat, user, chats, setChats, notification } =
-    ChatState();
-  console.log(user);
-  const [loggedUser, setLoggedUser] = useState(null);
-  const [lastMessage, setLastMessage] = useState(null);
+  const { selectedChat, setSelectedChat, user, chats, setChats } =
+    useChatState();
+
+  const [loggedUser, setLoggedUser] = useState(user);
 
   const fetchChats = async () => {
     try {
@@ -28,7 +22,6 @@ function MyChats({ fetchAgain }) {
         },
       });
       const Data = data.chats;
-      console.log(Data);
       setChats(Data);
     } catch (error) {
       console.error(error);
@@ -36,7 +29,6 @@ function MyChats({ fetchAgain }) {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("user")));
     fetchChats();
   }, [user.token, fetchAgain]);
 
@@ -58,17 +50,14 @@ function MyChats({ fetchAgain }) {
         fontSize={{ base: "1.3rem", md: "1rem", lg: "1.3rem" }}
         fontFamily={"Work Sans"}
         w={"100%"}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        display={"flex"}
+        justifyContent={{ base: "flex-end", md: "space-between" }}
+        alignItems={"center"}
       >
-        My Chats
+        <Text display={{ base: "none", md: "flex" }}>My Chats</Text>
         <GroupChatModel>
           <Button
-            d={"flex"}
-            fontSize={{ base: "1rem", md: "0.7rem", lg: "1rem" }}
+            fontSize={{ base: "0.8rem", md: "0.7rem", lg: "1rem" }}
             rightIcon={<AddIcon />}
           >
             New Group Chat
@@ -121,13 +110,17 @@ function MyChats({ fetchAgain }) {
                   }
                 />
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Text ml={2} fontSize={20}>
+                  <Text
+                    ml={2}
+                    fontSize={{ base: "15px", md: "20px" }}
+                    fontWeight={600}
+                  >
                     {(chat.isGroupChat
                       ? chat.chatName
                       : getSender(loggedUser, chat.users)
                     ).substring(0, 20)}
                   </Text>
-                  <Text ml={2} size={"sm"}>
+                  <Text ml={2} fontSize={{ base: "11px", md: "15px" }}>
                     {<LastMessageofChat value={chat._id} user={user} />}
                   </Text>
                 </div>

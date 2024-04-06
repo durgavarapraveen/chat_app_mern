@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ChatState } from "../Context/ChatProvider";
 import { Box } from "@chakra-ui/react";
 import SideDrawer from "../Components/miscellaneous/SideDrawer";
 import MyChats from "../Components/miscellaneous/MyChats";
 import ChatBox from "../Components/miscellaneous/ChatBox";
+import { useChatState } from "../Context/ChatProvider";
 
 function ChatPage() {
-  const { user } = ChatState();
+  const { user } = useChatState();
 
   const [fetchAgain, setFetchAgain] = useState(false);
 

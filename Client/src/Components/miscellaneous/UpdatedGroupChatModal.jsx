@@ -15,17 +15,16 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
-import { ChatState } from "../../Context/ChatProvider";
 import toast from "react-hot-toast";
 import UserBadgeItem from "./UserBadgeItem";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 import { Spinner } from "@chakra-ui/spinner";
+import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-
 function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
-  const { selectedChat, setSelectedChat, user } = ChatState();
+  const { selectedChat, setSelectedChat, user } = useChatState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ChatState } from "../Context/ChatProvider";
+import { useChatState } from "../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LastMessageofChat = ({ value, user }) => {
   const [lastMessage, setLastMessage] = useState("");
-  const { notification, selectedChats } = ChatState();
+  const { notification, selectedChats } = useChatState();
 
   useEffect(() => {
     const fetchLastMessage = async () => {
@@ -15,7 +15,6 @@ const LastMessageofChat = ({ value, user }) => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log(data[data.length - 1].content);
         if (data && data.length > 0) {
           setLastMessage(data[data.length - 1].content.substring(0, 20));
         }

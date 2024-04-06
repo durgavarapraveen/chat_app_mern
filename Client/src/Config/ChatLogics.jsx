@@ -45,5 +45,3 @@ export const isLastMessage = (messages, i, userId) => {
     messages[messages.length - 1].sender._id
   );
 };
-
-

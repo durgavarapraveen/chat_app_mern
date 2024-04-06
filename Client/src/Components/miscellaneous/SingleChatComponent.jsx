@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
 import { Box, Text, IconButton } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../../Config/ChatLogics";
@@ -14,6 +13,7 @@ import io from "socket.io-client";
 import animationData from "../../Animations/Typing.json";
 import Lottie from "lottie-react";
 import blueBoy from "../../Animations/blueBoy.json";
+import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const ENDPOINT = `${backendURL}`;
@@ -28,7 +28,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
   const [isTyping, setIsTyping] = useState(false);
 
   const { user, selectedChat, setSelectedChat, notification, setNotification } =
-    ChatState();
+    useChatState();
 
   useEffect(() => {
     socket = io(ENDPOINT);
