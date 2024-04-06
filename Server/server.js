@@ -13,8 +13,11 @@ connectDB();
 
 const app = express();
 const corsOrigin = {
-  origin: "https://chat-app-mern-frontend.onrender.com",
-  // origin: "*",
+  origin: [
+    "https://connect-app-rmx1.onrender.com",
+    "https://chat-app-mern-frontend.onrender.com",
+    "http://localhost:5173",
+  ],
 };
 app.use(cors(corsOrigin));
 app.use(express.json());
@@ -37,8 +40,11 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://chat-app-mern-frontend.onrender.com",
-    // origin: "*",
+    origin: [
+      "https://connect-app-rmx1.onrender.com",
+      "https://chat-app-mern-frontend.onrender.com",
+      "http://localhost:5173",
+    ],
   },
 });
 
