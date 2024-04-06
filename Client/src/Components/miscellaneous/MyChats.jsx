@@ -6,11 +6,21 @@ import { getSender, getSenderProfilePic } from "../../Config/ChatLogics";
 import GroupChatModel from "./GroupChatModel";
 import LastMessageofChat from "../../Config/LastMessageofChat";
 import { useChatState } from "../../Context/ChatProvider";
+import NotificationBadge from "../Parts/NotificationBadge";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function MyChats({ fetchAgain }) {
-  const { selectedChat, setSelectedChat, user, chats, setChats } =
-    useChatState();
+  const {
+    selectedChat,
+    setSelectedChat,
+    user,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = useChatState();
+
+  console.log(notification);
 
   const [loggedUser, setLoggedUser] = useState(user);
 
@@ -31,6 +41,24 @@ function MyChats({ fetchAgain }) {
   useEffect(() => {
     fetchChats();
   }, [user.token, fetchAgain]);
+
+  //Filter and Count Chat Notifications
+  const filterNotifications = (chatId) => {
+    console.log(chatId);
+    var count = 0;
+    notification.forEach((n) => {
+      if (n.chat._id === chatId) {
+        count++;
+      }
+    });
+    console.log(count);
+    return count;
+  };
+
+  //Clear Notifications
+  const handleNotificationClear = async (chatId) => {
+    setNotification(notification.filter((n) => n.chat._id !== chatId));
+  };
 
   return (
     <Box
@@ -79,7 +107,9 @@ function MyChats({ fetchAgain }) {
           <Stack overflowY={"scroll"}>
             {chats.map((chat, i) => (
               <Box
-                onClick={() => setSelectedChat(chat)}
+                onClick={() => {
+                  setSelectedChat(chat), handleNotificationClear(chat._id);
+                }}
                 cursor={"pointer"}
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
@@ -87,6 +117,7 @@ function MyChats({ fetchAgain }) {
                 py={2}
                 borderRadius={"lg"}
                 key={chat._id}
+                position={"relative"}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -124,6 +155,12 @@ function MyChats({ fetchAgain }) {
                     {<LastMessageofChat value={chat._id} user={user} />}
                   </Text>
                 </div>
+
+                {filterNotifications(chat._id) > 0 && (
+                  <div style={{ position: "absolute", right: "10px" }}>
+                    <NotificationBadge value={filterNotifications(chat._id)} />
+                  </div>
+                )}
               </Box>
             ))}
           </Stack>

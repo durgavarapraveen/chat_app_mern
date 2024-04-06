@@ -113,6 +113,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
   };
 
   useEffect(() => {
+    console.log(notification);
     socket.on("message recieved", (newMessageRecieved) => {
       if (
         !selectedChatComapre ||
@@ -127,6 +128,18 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
       }
     });
   });
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedChat(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedChat]);
 
   return (
     <>

@@ -7,6 +7,7 @@ import ChatBox from "../Components/miscellaneous/ChatBox";
 import { useChatState } from "../Context/ChatProvider";
 
 function ChatPage() {
+  
   const { user } = useChatState();
 
   const [fetchAgain, setFetchAgain] = useState(false);

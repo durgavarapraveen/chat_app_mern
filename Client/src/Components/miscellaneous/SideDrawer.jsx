@@ -31,6 +31,7 @@ import UserListItem from "./UserListItem";
 import { getSender } from "../../Config/ChatLogics";
 import { Badge } from "primereact/badge";
 import { useChatState } from "../../Context/ChatProvider";
+import NotificationBadge from "../Parts/NotificationBadge";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function SideDrawer() {
@@ -43,6 +44,8 @@ function SideDrawer() {
     notification,
     setNotification,
   } = useChatState();
+  console.log(notification);
+  console.log(notification.length);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -138,10 +141,17 @@ function SideDrawer() {
 
         <div style={{ display: "flex", flexDirection: "row" }}>
           <Menu>
-            <MenuButton p={1} display={{ base: "none", md: "block" }}>
-              <BellIcon fontSize={"2xl"} m={1}>
-                <Badge value="2" severity="danger"></Badge>
-              </BellIcon>
+            <MenuButton
+              p={1}
+              display={{ base: "none", md: "block" }}
+              position={"relative"}
+            >
+              <BellIcon fontSize={"2xl"} m={1}></BellIcon>
+              <div style={{ position: "absolute", top: "0", right: "0" }}>
+                {notification.length > 0 && (
+                  <NotificationBadge value={notification.length} />
+                )}
+              </div>
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No new messages"}
