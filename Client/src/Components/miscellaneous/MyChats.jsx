@@ -11,6 +11,7 @@ import {
 } from "../../Config/ChatLogics";
 import GroupChatModel from "./GroupChatModel";
 import LastMessageofChat from "../../Config/LastMessageofChat";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function MyChats({ fetchAgain }) {
   const { selectedChat, setSelectedChat, user, chats, setChats, notification } =
@@ -21,7 +22,7 @@ function MyChats({ fetchAgain }) {
 
   const fetchChats = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/chat", {
+      const { data } = await axios.get(`${backendURL}/api/chat`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

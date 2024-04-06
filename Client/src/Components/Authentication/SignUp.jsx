@@ -11,6 +11,7 @@ import {
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function SignUp() {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ function SignUp() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/register",
+        `${backendURL}/api/user/register`,
         user
       );
       console.log(data);

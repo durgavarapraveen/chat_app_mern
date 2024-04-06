@@ -31,6 +31,7 @@ import Chatloading from "./Chatloading";
 import UserListItem from "./UserListItem";
 import { getSender } from "../../Config/ChatLogics";
 import { Badge } from "primereact/badge";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function SideDrawer() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ function SideDrawer() {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/getUsers?search=${search}`,
+        `${backendURL}/api/user/getUsers?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -85,7 +86,7 @@ function SideDrawer() {
     setLoadingChat(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat/getChat",
+        `${backendURL}/api/chat/getChat`,
         { userId: userId },
         {
           headers: {

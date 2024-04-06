@@ -21,6 +21,8 @@ import UserBadgeItem from "./UserBadgeItem";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 import { Spinner } from "@chakra-ui/spinner";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 
 function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
   const { selectedChat, setSelectedChat, user } = ChatState();
@@ -43,7 +45,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/removemember",
+        `${backendURL}/api/chat/removemember`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -70,7 +72,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/removemember",
+        `${backendURL}/api/chat/removemember`,
         {
           chatId: selectedChat._id,
           userId: user.data._id,
@@ -111,7 +113,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/addmember",
+        `${backendURL}/api/chat/addmember`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -141,7 +143,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/getUsers?search=${value}`,
+        `${backendURL}/api/user/getUsers?search=${value}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -166,7 +168,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
       setRenameLoading(true);
 
       const { data } = await axios.put(
-        "http://localhost:5000/api/chat/renamegrp",
+        `${backendURL}/api/chat/renamegrp`,
         { chatId: selectedChat._id, chatName: grpChatName },
         {
           headers: {
@@ -195,7 +197,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.delete(
-        "http://localhost:5000/api/chat/deletegrp",
+        `${backendURL}/api/chat/deletegrp`,
         {
           chatId: selectedChat._id,
         },

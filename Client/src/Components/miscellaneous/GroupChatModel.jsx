@@ -18,6 +18,7 @@ import { ChatState } from "../../Context/ChatProvider";
 import axios from "axios";
 import UserListItem from "./UserListItem";
 import UserBadgeItem from "./UserBadgeItem";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function GroupChatModel({ children }) {
   const { user, chats, setChats } = ChatState();
@@ -37,7 +38,7 @@ function GroupChatModel({ children }) {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/getUsers?search=${value}`,
+        `${backendURL}/api/user/getUsers?search=${value}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -64,7 +65,7 @@ function GroupChatModel({ children }) {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat/creategroup",
+        `${backendURL}/api/chat/creategroup`,
         {
           name: grpChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),

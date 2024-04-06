@@ -14,8 +14,9 @@ import io from "socket.io-client";
 import animationData from "../../Animations/Typing.json";
 import Lottie from "lottie-react";
 import blueBoy from "../../Animations/blueBoy.json";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = `${backendURL}`;
 var socket, selectedChatComapre;
 
 function SingleChatComponent({ fetchAgain, setFetchAgain }) {
@@ -44,7 +45,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:5000/api/message",
+          `${backendURL}/api/message`,
           {
             chatId: selectedChat._id,
             content: newMessage,
@@ -68,7 +69,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/message/${selectedChat._id}`,
+        `${backendURL}/api/message/${selectedChat._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

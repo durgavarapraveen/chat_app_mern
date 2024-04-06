@@ -14,6 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function ProfileModel({ user, children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

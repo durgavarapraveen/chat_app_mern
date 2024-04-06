@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatState } from "../Context/ChatProvider";
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LastMessageofChat = ({ value, user }) => {
   const [lastMessage, setLastMessage] = useState("");
@@ -9,14 +10,11 @@ const LastMessageofChat = ({ value, user }) => {
   useEffect(() => {
     const fetchLastMessage = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/api/message/${value}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
+        const { data } = await axios.get(`${backendURL}/api/message/${value}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
         console.log(data[data.length - 1].content);
         if (data && data.length > 0) {
           setLastMessage(data[data.length - 1].content.substring(0, 20));
