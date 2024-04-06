@@ -18,6 +18,10 @@ const corsorigin = {
 app.use(cors(corsorigin));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("API is running..");
+});
+
 app.use("/api/user", UserRoutes);
 app.use("/api/chat", ChatRoutes);
 app.use("/api/message", MessageRoutes);
