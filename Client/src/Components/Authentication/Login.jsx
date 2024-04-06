@@ -87,18 +87,6 @@ function Login() {
         >
           Login
         </Button>
-
-        <Button
-          colorScheme="red"
-          varaient="solid"
-          width="100%"
-          onClick={() => {
-            setUser({ ...user, email: "guest@example.com" });
-            setUser({ ...user, password: "guest" });
-          }}
-        >
-          Get Guest User Credentails
-        </Button>
       </VStack>
     </div>
   );

@@ -13,6 +13,8 @@ import Login from "../Components/Authentication/Login";
 import SignUp from "../Components/Authentication/SignUp";
 import { useNavigate } from "react-router-dom";
 import { useChatState } from "../Context/ChatProvider";
+import { messaging } from "../Firebase";
+import { getToken } from "firebase/messaging";
 
 function HomePage() {
   document.title = "Login | Connect";
@@ -20,11 +22,27 @@ function HomePage() {
   const navigate = useNavigate();
   const { user } = useChatState();
   console.log("user", user);
-  // useEffect(() => {
-  //   if (user) {
-  //     window.location.href = "/chat";
-  //   }
-  // }, [user]);
+
+  async function RequestPermission() {
+    const premission = await Notification.requestPermission();
+
+    if (premission === "granted") {
+      //Generate Token
+      console.log("Permission", premission);
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BCk3eIzvi0seXH-3AvLN38CjAtrZZZJSwTExP88zh5_UOX0SjQ8NgxulXrIIcEvVqjBfFqzKEgPRSEImlLUP4mw",
+      });
+      console.log("Token", token);
+    } else if (premission === "denied") {
+      alert("You denied the permission for notifications");
+    }
+  }
+
+  useEffect(() => {
+    //Req user for notification permission
+    RequestPermission();
+  }, []);
 
   return (
     <div className="Login-Container">
