@@ -12,7 +12,9 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const corsorigin = "http://localhost:5173";
+const corsorigin = {
+  origin: "http://localhost:5173",
+};
 app.use(cors(corsorigin));
 app.use(express.json());
 
@@ -22,17 +24,17 @@ app.use("/api/message", MessageRoutes);
 
 // -------------Deployment----------------
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/Client/dist")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "/Client/dist")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.join(process.cwd(), "/Client/dist/index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  });
-}
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.join(process.cwd(), "/Client/dist/index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running..");
+//   });
+// }
 
 // -----------------Deployment----------------
 
