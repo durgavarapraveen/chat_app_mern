@@ -12,10 +12,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const corsorigin = {
-  origin: "https://chat-app-mern-frontend.onrender.com/",
+const corsOrigin = {
+  origin: "https://chat-app-mern-frontend.onrender.com",
 };
-app.use(cors(corsorigin));
+app.use(cors(corsOrigin));
 app.use(express.json());
 
 app.get("/", (req, res) => {
