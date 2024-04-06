@@ -13,7 +13,7 @@ connectDB();
 
 const app = express();
 const corsorigin = {
-  origin: "http://localhost:5173",
+  origin: "https://chat-app-mern-frontend.onrender.com/",
 };
 app.use(cors(corsorigin));
 app.use(express.json());
