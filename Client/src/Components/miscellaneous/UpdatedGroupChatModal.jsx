@@ -44,7 +44,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `${backendURL}/api/chat/removemember`,
+        `/api/chat/removemember`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -71,7 +71,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `${backendURL}/api/chat/removemember`,
+        `/api/chat/removemember`,
         {
           chatId: selectedChat._id,
           userId: user.data._id,
@@ -112,7 +112,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `${backendURL}/api/chat/addmember`,
+        `/api/chat/addmember`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -142,7 +142,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${backendURL}/api/user/getUsers?search=${value}`,
+        `/api/user/getUsers?search=${value}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -167,7 +167,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
       setRenameLoading(true);
 
       const { data } = await axios.put(
-        `${backendURL}/api/chat/renamegrp`,
+        `/api/chat/renamegrp`,
         { chatId: selectedChat._id, chatName: grpChatName },
         {
           headers: {
@@ -196,7 +196,7 @@ function UpdatedGroupChatModal({ fetchAgain, setFetchAgain, fetchMessages }) {
     try {
       setLoading(true);
       const { data } = await axios.delete(
-        `${backendURL}/api/chat/deletegrp`,
+        `/api/chat/deletegrp`,
         {
           chatId: selectedChat._id,
         },

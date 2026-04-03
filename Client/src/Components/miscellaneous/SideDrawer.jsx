@@ -69,7 +69,7 @@ function SideDrawer() {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${backendURL}/api/user/getUsers?search=${search}`,
+        `/api/user/getUsers?search=${search}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -89,7 +89,7 @@ function SideDrawer() {
     setLoadingChat(true);
     try {
       const { data } = await axios.post(
-        `${backendURL}/api/chat/getChat`,
+        `/api/chat/getChat`,
         { userId: userId },
         {
           headers: {

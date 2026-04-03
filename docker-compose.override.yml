@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./Server:/app                  # mount source code
+      - /app/node_modules              # preserve container's node_modules
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./Client:/app                  # mount source code
+      - /app/node_modules              # preserve container's node_modules
+    ports:
+      - "5173:5173"                    # Vite dev server directly
+    environment:
+      - NODE_ENV=development

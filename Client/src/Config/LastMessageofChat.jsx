@@ -10,7 +10,7 @@ const LastMessageofChat = ({ value, user }) => {
   useEffect(() => {
     const fetchLastMessage = async () => {
       try {
-        const { data } = await axios.get(`${backendURL}/api/message/${value}`, {
+        const { data } = await axios.get(`/api/message/${value}`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

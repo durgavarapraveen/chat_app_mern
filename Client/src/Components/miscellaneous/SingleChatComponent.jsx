@@ -16,7 +16,7 @@ import blueBoy from "../../Animations/blueBoy.json";
 import { useChatState } from "../../Context/ChatProvider";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-const ENDPOINT = `${backendURL}`;
+const ENDPOINT = ``;
 var socket, selectedChatComapre;
 
 function SingleChatComponent({ fetchAgain, setFetchAgain }) {
@@ -31,7 +31,9 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
     useChatState();
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io(ENDPOINT, {
+      transports: ["websocket", "polling"],  // try WebSocket first
+    });
     socket.emit("setup", user.data);
     socket.on("connection", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
@@ -45,7 +47,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          `${backendURL}/api/message`,
+          `/api/message`,
           {
             chatId: selectedChat._id,
             content: newMessage,
@@ -69,7 +71,7 @@ function SingleChatComponent({ fetchAgain, setFetchAgain }) {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `${backendURL}/api/message/${selectedChat._id}`,
+        `/api/message/${selectedChat._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
