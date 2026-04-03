@@ -85,7 +85,7 @@ function SignUp() {
 
     try {
       const { data } = await axios.post(
-        `${backendURL}/api/user/register`,
+        `/api/user/register`,
         user
       );
       if (data.success) {

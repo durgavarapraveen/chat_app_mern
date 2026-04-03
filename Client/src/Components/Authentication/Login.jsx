@@ -36,7 +36,7 @@ function Login() {
     }
 
     try {
-      const { data } = await axios.post(`${backendURL}/api/user/login`, user);
+      const { data } = await axios.post(`/api/user/login`, user);
       if (data.success) {
         toast.success(data.message);
         console.log(data);

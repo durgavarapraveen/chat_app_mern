@@ -38,7 +38,7 @@ function GroupChatModel({ children }) {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${backendURL}/api/user/getUsers?search=${value}`,
+        `/api/user/getUsers?search=${value}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -65,7 +65,7 @@ function GroupChatModel({ children }) {
 
     try {
       const { data } = await axios.post(
-        `${backendURL}/api/chat/creategroup`,
+        `/api/chat/creategroup`,
         {
           name: grpChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),

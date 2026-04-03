@@ -26,7 +26,7 @@ function MyChats({ fetchAgain }) {
 
   const fetchChats = async () => {
     try {
-      const { data } = await axios.get(`${backendURL}/api/chat`, {
+      const { data } = await axios.get(`/api/chat`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
