@@ -1,0 +1,86 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]      # runs tests on PRs but doesn't deploy
+
+env:
+  AWS_REGION: ap-south-1
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+  BACKEND_IMAGE: chat-server
+  FRONTEND_IMAGE: chat-frontend
+
+jobs:
+  # ─────────────────────────────────────
+  # JOB 1 — Test
+  # ─────────────────────────────────────
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Server/package-lock.json
+
+      - name: Install backend dependencies
+        run: cd Server && npm ci
+
+      - name: Run backend tests
+        run: cd Server && npm test --if-present   # skips if no tests yet
+
+  # ─────────────────────────────────────
+  # JOB 2 — Build & Push to ECR
+  # ─────────────────────────────────────
+  build-and-push:
+    name: Build & Push Images
+    runs-on: ubuntu-latest
+    needs: test                # only runs if test job passes
+    if: github.ref == 'refs/heads/main'   # only on main, not PRs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend
+        run: |
+          docker build \
+            -t $ECR_REGISTRY/$BACKEND_IMAGE:latest \
+            -t $ECR_REGISTRY/$BACKEND_IMAGE:${{ github.sha }} \
+            ./Server
+          docker push $ECR_REGISTRY/$BACKEND_IMAGE:latest
+          docker push $ECR_REGISTRY/$BACKEND_IMAGE:${{ github.sha }}
+
+      - name: Build and push frontend
+        run: |
+          docker build \
+            -t $ECR_REGISTRY/$FRONTEND_IMAGE:latest \
+            -t $ECR_REGISTRY/$FRONTEND_IMAGE:${{ github.sha }} \
+            ./Client
+          docker push $ECR_REGISTRY/$FRONTEND_IMAGE:latest
+          docker push $ECR_REGISTRY/$FRONTEND_IMAGE:${{ github.sha }}
+
+      - name: Summary
+        run: |
+          echo "### Images pushed to ECR 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend: $ECR_REGISTRY/$BACKEND_IMAGE:${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: $ECR_REGISTRY/$FRONTEND_IMAGE:${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
